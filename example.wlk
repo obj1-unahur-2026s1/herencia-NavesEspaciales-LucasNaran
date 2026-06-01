@@ -1,4 +1,4 @@
-object pepita {
+object naveEspacial {
   var energy = 100
 
   method energy() = energy
