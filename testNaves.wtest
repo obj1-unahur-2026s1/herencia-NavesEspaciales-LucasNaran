@@ -1,0 +1,9 @@
+import naves.*
+describe "Etapa 1" {
+  const b = new NaveBaliza(color = "blanco", velocidad = 100, direccion = 2)
+  test "navbe Baliza" {
+    
+    assert.equals(100, pepita.energy())
+  }
+
+}
