@@ -1,9 +1,71 @@
 import naves.*
-describe "Etapa 1" {
-  const b = new NaveBaliza(color = "blanco", velocidad = 100, direccion = 2)
-  test "navbe Baliza" {
-    
-    assert.equals(100, pepita.energy())
+describe "Etapa 1" {  
+  const b = new NaveBaliza(color = "blanco", velocidad = 0, direccion = 2, combustible = 0)
+  const p = new NavePasajeros(pasajeros=3, comida =0, bebida = 0, velocidad = 0, direccion = 2, combustible = 0)
+  const c = new NaveConbate(visible= true, misiles = true, velocidad = 0, direccion = 2, combustible = 0)
+  test "nave b preparar viaje color" {
+    b.prepararViaje()
+    assert.equals("verde", b.color())
   }
-
+  test "nave b preparar viaje direccion" {
+    b.prepararViaje()
+    assert.equals(0, b.direccion())
+  }
+  test "nave b preparar viaje combustible" {
+    b.prepararViaje()
+    assert.equals(30000, b.combustible())
+  }
+  test "nave b preparar viaje velocidad" {
+    b.prepararViaje()
+    assert.equals(5000, b.velocidad())
+  }
+  test "nave p preparar viaje comida" {
+    p.prepararViaje()
+    assert.equals(12, p.comida())
+  }
+  test "nave p preparar viaje bebida" {
+    p.prepararViaje()
+    assert.equals(18, p.bebida())
+  }
+  test "nave p preparar viaje direccion" {
+    p.prepararViaje()
+    assert.equals(3, p.direccion())
+  }
+  test "nave p preparar viaje combustible" {
+    p.prepararViaje()
+    assert.equals(30000, p.combustible())
+  }
+  test "nave p preparar viaje velocidad" {
+    p.prepararViaje()
+    assert.equals(5000, p.velocidad())
+  }  
+  test "nave c preparar viaje visible" {
+    c.prepararViaje()
+    assert.that( c.estaInvisible())
+  }
+  test "nave c preparar viaje misiles" {
+    c.prepararViaje()
+    assert.notThat(c.misilesDesplegados())
+  }
+  test "nave c preparar viaje mensaje" {
+    c.prepararViaje()
+    assert.equals("Saliendo en misión", c.ultimoMensajeEmitido())
+  }
+  test "nave c preparar viaje mensaje emitido" {
+    c.prepararViaje()
+    assert.that(c.emitioMensaje("Saliendo en misión"))
+  }
+  test "nave c preparar viaje es escueta" {
+    c.prepararViaje()
+    assert.that(c.esEscueta())
+  }
+  test "nave c preparar viaje combustible" {
+    c.prepararViaje()
+    assert.equals(30000, c.combustible())
+  }
+  test "nave c preparar viaje velocidad" {
+    c.prepararViaje()
+    assert.equals(20000, c.velocidad())
+  }  
 }
+//falta de tranquilidad para abajo
