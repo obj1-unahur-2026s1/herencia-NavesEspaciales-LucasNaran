@@ -22,32 +22,61 @@ class Nave {
     self.cargarCombustible(30000)
     self.acelerar(5000)
   }
+
+  method estaTranquila() = combustible > 4000 and velocidad <= 12000 and self.condicionAdicional()
+
+  method condicionAdicional()
+
+  method recibirAmenaza(){
+    self.escapar()
+    self.avisar()
+  }
+  method escapar()
+  method avisar()
+
+  method estaDeRelajo() = self.estaTranquila() and self.tienePocaActividad()
+  method tienePocaActividad()
 }
 
 class NaveBaliza inherits Nave {
   var color
+  var noCambioDeColor = true 
 
   method color()= color
-  method cambiarColorDeBaliza(colorNuevo) {color = colorNuevo}  
+  method cambiarColorDeBaliza(colorNuevo) {
+    color = colorNuevo
+    noCambioDeColor = false
+    }  
 
   override method prepararViaje(){
     super()
     self.cambiarColorDeBaliza("verde")
     self. ponerseParaleloAlSol()
   }
+
+  override method condicionAdicional() = not (color == "rojo")
+
+  override method escapar() { self.irHaciaElSol()}
+  override method avisar() { self.cambiarColorDeBaliza("rojo") }
+
+  override method tienePocaActividad() = noCambioDeColor
 }
 class NavePasajeros inherits Nave {
   const pasajeros
   var comida
   var bebida
+  var racionesConsumidasDeComida = 0
 
   method comida()= comida
   method bebida() = bebida
 
   method cargarComida(cantidad){comida += cantidad}
-  method consumirComida(cantidad){comida -= cantidad}
+  method consumirComida(cantidad){
+    comida = (comida - cantidad).max(0)
+    racionesConsumidasDeComida += cantidad 
+    }
   method cargarBebida(cantidad){bebida += cantidad}
-  method consumirBebida(cantidad){bebida -= cantidad}
+  method consumirBebida(cantidad){ bebida = (bebida - cantidad).max(0) }
 
   override method prepararViaje(){
     super()
@@ -55,8 +84,18 @@ class NavePasajeros inherits Nave {
     self.cargarBebida(6 * pasajeros)
     self.acercarseUnPocoAlSol()
   }
+
+  override method condicionAdicional() = true
+
+  override method escapar() { self.acelerar(velocidad)}
+  override method avisar() { 
+    self.consumirComida(pasajeros)
+    self.consumirBebida(pasajeros * 2)
+  }
+
+  override method tienePocaActividad() = racionesConsumidasDeComida < 50
 }
-class NaveConbate inherits Nave {
+class NaveCombate inherits Nave {
   var visible
   var misiles
   const mensajes = []
@@ -86,5 +125,36 @@ class NaveConbate inherits Nave {
     self.acelerar(15000)
     self.emitirMensaje("Saliendo en misión")
   }
+
+  override method condicionAdicional() = not misiles
+
+  override method escapar() {
+    self.acercarseUnPocoAlSol()
+    self.acercarseUnPocoAlSol()
+  }
+  override method avisar() {self.emitirMensaje("Amenaza recibida")}
+
+  override method tienePocaActividad() = true
 }
-  
+class NaveHospital inherits NavePasajeros{
+  var quirofanosPreparados = false
+  method prepararQuirofanos() {quirofanosPreparados = true}
+  method cerrarQuirofanos() {quirofanosPreparados = false}
+
+  override method condicionAdicional() = not quirofanosPreparados
+
+  override method recibirAmenaza(){
+    super() 
+    self.prepararQuirofanos()
+  }
+}
+class NaveCombateSigilosa inherits NaveCombate{
+  override method condicionAdicional() {
+    return super() and  visible
+  }
+  override method escapar(){
+    super()
+    self.desplegarMisiles()
+    self.ponerseInvisible()
+  }
+}

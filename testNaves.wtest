@@ -2,7 +2,7 @@ import naves.*
 describe "Etapa 1" {  
   const b = new NaveBaliza(color = "blanco", velocidad = 0, direccion = 2, combustible = 0)
   const p = new NavePasajeros(pasajeros=3, comida =0, bebida = 0, velocidad = 0, direccion = 2, combustible = 0)
-  const c = new NaveConbate(visible= true, misiles = true, velocidad = 0, direccion = 2, combustible = 0)
+  const c = new NaveCombate(visible= true, misiles = true, velocidad = 0, direccion = 2, combustible = 0)
   test "nave b preparar viaje color" {
     b.prepararViaje()
     assert.equals("verde", b.color())
@@ -68,4 +68,49 @@ describe "Etapa 1" {
     assert.equals(20000, c.velocidad())
   }  
 }
-//falta de tranquilidad para abajo
+describe "etapa tranquilidad" {
+  const b = new NaveBaliza(color = "blanco", velocidad = 0, direccion = 2, combustible = 0)
+  const p = new NavePasajeros(pasajeros=3, comida =0, bebida = 0, velocidad = 0, direccion = 2, combustible = 0)
+  const c = new NaveCombate(visible= true, misiles = true, velocidad = 0, direccion = 2, combustible = 0)
+  const ph = new NavePasajeros(pasajeros=3, comida =0, bebida = 0, velocidad = 0, direccion = 2, combustible = 0)
+  const cs = new NaveCombate(visible= true, misiles = true, velocidad = 0, direccion = 2, combustible = 0)
+
+  test "b no esta tranquila"{
+  assert.notThat(b.estaTranquila())
+  }
+  test "p no esta tranquila"{
+  assert.notThat(p.estaTranquila())
+  }
+  test "c no esta tranquila"{
+  assert.notThat(c.estaTranquila())
+  }
+  test "ph no esta tranquila"{
+  assert.notThat(ph.estaTranquila())
+  }
+  test "cs no esta tranquila"{
+  assert.notThat(cs.estaTranquila())
+  }
+}
+describe "etapa relajo" {
+  const b = new NaveBaliza(color = "blanco", velocidad = 0, direccion = 2, combustible = 0)
+  const p = new NavePasajeros(pasajeros=3, comida =0, bebida = 0, velocidad = 0, direccion = 2, combustible = 0)
+  const c = new NaveCombate(visible= true, misiles = true, velocidad = 0, direccion = 2, combustible = 0)
+  const ph = new NavePasajeros(pasajeros=3, comida =0, bebida = 0, velocidad = 0, direccion = 2, combustible = 0)
+  const cs = new NaveCombate(visible= true, misiles = true, velocidad = 0, direccion = 2, combustible = 0)
+
+  test "b no esta de relajo"{
+  assert.notThat(b.estaDeRelajo())
+  }
+  test "p no esta de relajo"{
+  assert.notThat(p.estaDeRelajo())
+  }
+  test "c no esta de relajo"{
+  assert.notThat(c.estaDeRelajo())
+  }
+  test "ph no esta de relajo"{
+  assert.notThat(ph.estaDeRelajo())
+  }
+  test "cs no esta de relajo"{
+  assert.notThat(cs.estaDeRelajo())
+  }
+}
